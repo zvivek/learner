@@ -127,37 +127,49 @@ public class Automate {
         Select gmail = new Select(driver.findElement(By.name("om_apm_wt390:wtMainContent:wtCoApplicantsTable:0:wtGuarantor_EmailAddressType")));
         gmail.selectByVisibleText("Business");
         driver.findElement(By.name("om_apm_wt390:wtMainContent:wtCoApplicantsTable:0:wtGuarantor_title")).sendKeys("Mr");
+        driver.findElement(By.name("om_apm_wt390:wtMainContent:wtCoApplicantsTable:0:wtguarantorAnnualIncomeDisclouse")).click();
+        Thread.sleep(1000);
         driver.findElement(By.name("om_apm_wt390:wtMainContent:wtCoApplicantsTable:0:wtGuarantor_TotalAnnualIncome")).sendKeys("9000000");
         
-        driver.findElement(By.name("om_apm_wt390:wtMainContent:wtCoApplicantsTable:0:wtguarantorAnnualIncomeDisclouse")).click();
-
+        String parentWindowHandler = driver.getWindowHandle();
+        Thread.sleep(1000);
         Select org = new Select(driver.findElement(By.name("om_apm_wt390:wtMainContent:wtSTBankerSubmiiterInfo_Organization")));
         org.selectByVisibleText("Branch Banker");
         Select grp = new Select(driver.findElement(By.name("om_apm_wt390:wtMainContent:wtSTBankerSubmiiterInfo_BankingGroup")));
         grp.selectByVisibleText("Cross sell");
-        driver.findElement(By.name("om_apm_wt390:wtMainContent:wtCoApplicantsTable:0:wtGuarantor_DigitalCom")).click();
         
+        // Store your parent window
+
+        driver.findElement(By.id("om_apm_wt390:wtMainContent:wtCoApplicantsTable:0:wtInfoDigitalCommunication")).click();
+        System.out.println("parent "+parentWindowHandler);
         
-        String parentWindowHandler = driver.getWindowHandle(); // Store your parent window
+        //
+     //   waitForNumberofWindowsToEqual(2);
+      
         String subWindowHandler = null;
 
         Set<String> handles = driver.getWindowHandles(); // get all window handles
         Iterator<String> iterator = handles.iterator();
         while (iterator.hasNext()){
             subWindowHandler = iterator.next();
+           
         }
         driver.switchTo().window(subWindowHandler); // switch to popup window
+        System.out.println(subWindowHandler);
+        driver.findElement(By.id("om_apm_wt4:wtMainContent:wt1")).click();
 
       //*[@id="om_apm_wt4:wtMainContent:wt1"]
         //driver.findElement(By.linkText("Decline").click();
-        WebElement elementToClick2 =driver.findElement(By.xpath("//*[contains(text(), 'Decline')]"));
-        ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+elementToClick2.getLocation().y+")");
+     /*   WebElement elementToClick2 =driver.findElement(By.xpath("//*[contains(text(), 'Decline')]"));
+        //((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+elementToClick2.getLocation().y+")");
+        ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+elementToClick2.getLocation().x+")");
 
-        elementToClick2.click();
+        elementToClick2.click();*/
+      //  driver.findElement(By.id("om_apm_wt4:wtMainContent:wt1")).click();
 
         // Now you are in the popup window, perform necessary actions here
-
-        driver.switchTo().window(parentWindowHandler); 
+         driver.switchTo().window(parentWindowHandler); 
+       // driver.switchTo().window(parentWindowHandler); 
         /*WebElement elementToClick2 =driver.findElement(By.xpath("//*[contains(text(), 'Decline')]"));
         ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+elementToClick2.getLocation().y+")");
 
