@@ -13,7 +13,7 @@ public class Automate {
     public static void main(String[] args) throws InterruptedException {
     	
 		
-    	System.setProperty("webdriver.chrome.driver","C:\\Users\\vivekkumarsingh\\Desktop\\sel\\ww\\chromedriver.exe");
+    	System.setProperty("webdriver.chrome.driver","C:\\Users\\Public\\chromedriver.exe");
         ChromeDriver driver = new ChromeDriver();
         driver.get("http://172.27.52.20/om_apm_qs/");
 
