@@ -1,5 +1,24 @@
 package selenium;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -7,13 +26,120 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 public class Automate {
 
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, IOException {
     	
-		
-    	System.setProperty("webdriver.chrome.driver","C:\\Users\\Public\\chromedriver.exe");
+        final String FILE_NAME = "C:\\Users\\vivekkumarsingh\\Desktop\\InpuParamenterst.xlsx";
+        
+        
+        FileInputStream fileIn = new FileInputStream("C:\\Users\\vivekkumarsingh\\Desktop\\Mails\\InpuParamenterst.xls");
+        POIFSFileSystem fs = new POIFSFileSystem(fileIn); 
+        HSSFWorkbook filename = new HSSFWorkbook(fs);
+        HSSFSheet sheet = filename.getSheetAt(0);
+
+       /* 
+        String column1 = "Key";
+        String column2 = "Value";
+        Integer columnNo1 = null;
+        Integer columnNo2 = null;
+        List<Cell> cells = new ArrayList<Cell>();
+        Row firstRow =(Row)sheet.getRow(0);
+
+        for(org.apache.poi.ss.usermodel.Cell cell:firstRow){
+            if (cell.getStringCellValue().equals(column1)){
+                columnNo1 = cell.getColumnIndex();
+            }
+        }
+
+        for(org.apache.poi.ss.usermodel.Cell cell:firstRow){
+            if (cell.getStringCellValue().equals(column2)){
+                columnNo2 = cell.getColumnIndex();
+            }
+        }
+        System.out.println(columnNo1);
+        System.out.println(columnNo2);
+*/
+        
+        
+        try {
+        	Integer NumberOfApplications=0;
+            FileInputStream excelFile = new FileInputStream(new File(FILE_NAME));
+            Workbook workbook = new XSSFWorkbook(excelFile);
+            Sheet datatypeSheet = workbook.getSheetAt(0);
+            Iterator<Row> iterator = datatypeSheet.iterator();
+            HashMap<String,String> hashMap= new HashMap<String,String>();
+            String cellvalue = null ;
+            while (iterator.hasNext()) {
+
+                Row currentRow = iterator.next();
+                Iterator<Cell> cellIterator = currentRow.iterator();
+                HSSFRow myRow = null;
+                while (cellIterator.hasNext()) {/*
+                	Cell currentCell = cellIterator.next();
+					Iterator cellIter = (  currentCell).cellIterator();
+	                while(cellIter.hasNext()){
+	                    HSSFCell myCell = (HSSFCell) cellIter.next();
+	                    cellvalue =  myCell.getStringCellValue();
+	                }
+                    //getCellTypeEnum shown as deprecated for version 3.15
+                    //getCellTypeEnum ill be renamed to getCellType starting from version 4.0
+                    if (currentCell.getCellTypeEnum() == CellType.STRING) {
+                    	hashMap.put(currentCell.getStringCellValue() ,cellvalue);
+                    			System.out.println("Hi");    
+                    			
+                    			
+                    			
+                } else if (currentCell.getCellTypeEnum() == CellType.NUMERIC) {
+                        System.out.print(currentCell.getNumericCellValue() );
+                        if(currentCell.getStringCellValue().equals("NumberOfApplications")) 
+                			NumberOfApplications=(int) currentCell.getNumericCellValue()	;
+                    }
+
+                */}
+                //System.out.println(NumberOfApplications);
+
+            }
+            System.out.println(hashMap);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+     
+              /* HSSFSheet sheet = (HSSFSheet) workbook.getSheetAt(0);
+                Iterator rowIter = sheet.rowIterator(); 
+     
+                while(rowIter.hasNext()){
+                    HSSFRow myRow = (HSSFRow) rowIter.next();
+                    Iterator cellIter = myRow.cellIterator();
+                    Vector<Integer> cellStoreVector=new Vector<Integer>();
+                    while(cellIter.hasNext()){
+                        HSSFCell myCell = (HSSFCell) cellIter.next();
+                        Integer cellvalue = Integer.parseInt(myCell.getStringCellValue());
+                        cellStoreVector.addElement(cellvalue);
+                    }
+                    String firstcolumnValue = null;
+                    Integer secondcolumnValue = null;
+     
+                    int i = 0;
+                    firstcolumnValue = cellStoreVector.get(i).toString(); 
+                    secondcolumnValue = cellStoreVector.get(i+1);
+     
+                    hashMap.put(firstcolumnValue,secondcolumnValue);
+                    System.out.println(hashMap);*/
+              
+                
+               
+        
+        
+        
+        
+    	//System.setProperty("webdriver.chrome.driver","chromedriver.exe");
+     	System.setProperty("webdriver.chrome.driver","C:\\Users\\Public\\chromedriver.exe");
         ChromeDriver driver = new ChromeDriver();
         driver.get("http://172.27.52.20/om_apm_qs/");
 
